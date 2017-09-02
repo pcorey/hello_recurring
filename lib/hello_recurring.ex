@@ -1,18 +1,11 @@
 defmodule HelloRecurring do
-  @moduledoc """
-  Documentation for HelloRecurring.
-  """
+  use Application
 
-  @doc """
-  Hello world.
+  import Supervisor.Spec
 
-  ## Examples
-
-      iex> HelloRecurring.hello
-      :world
-
-  """
-  def hello do
-    :world
+  def start(_type, _args) do
+    Supervisor.start_link([worker(HelloRecurring.FruitPrinter, [])],
+                          [strategy: :one_for_one, name: HelloRecurring.Supervisor])
   end
+
 end
